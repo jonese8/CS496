@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}Edit Card{% endblock %}
+{% block pageHeader %}Edit Card{% endblock %}
+
+{% block navbar %}
+<li><a class="active" href="/">Home</a></li>
+<li><a href="/view">View</a></li>
+<li><a href="/edit">Edit</a></li>
+{% endblock %}
+{% block content %}
+<div class="temp">
+
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+  <h2 class="panel-title"><h1>{{ cardObject['cardName'] }}</h1></h2>
+  </div>
+    <form action="/test" method="post">
+    <div class="panel-body">
+      
+        <div class="well">
+          <label for="cardType">Modify Attributes</label>
+          <div class="radio">
+            <label>
+            {% if cardObject['cardType'] == 'red' %}
+              <input type="radio" id="cardTypeRed" name="cardType" value="red" checked>
+            {% else %}
+              <input type="radio" id="cardTypeRed" name="cardType" value="red" >
+            {% endif %}
+              red <small><i>(noun, so a person/people place(s) or thing(s))</i></small>
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+            {% if cardObject['cardType'] == 'red' %}
+              <input type="radio" id="cardTypeGreen" name="cardType" value="green">
+            {% else %}
+              <input type="radio" id="cardTypeGreen" name="cardType" value="green"checked>
+            {% endif %}
+
+              green <small><i>(adjective,  descriptive phrase, or attribute)</i></small>
+            </label>
+          </div>
+          <div class="checkbox">
+            <label for="inBaseDeck">
+              {% if cardObject['includedIn'] %}
+              <input name="inBaseDeck" type="checkbox" id="inBaseDeck"checked>
+              {% else %}
+              <input name="inBaseDeck" type="checkbox" id="inBaseDeck">
+              {% endif %}
+              Include in Base Deck
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="cardName">Card Name</label> 
+          <input name="cardName" id="cardName" type="text" class="form-control input-lg" placeholder="Enter a word or phrase" value="{{ cardObject['cardName'] }}">  
+        </div> 
+        <div class="form-group">
+          <label for="cardDesc">Card Description</label>
+          <input type="text" class="form-control input-lg" id="cardDesc" name="cardDesc" placeholder= "Enter a brief description" value="{{ cardObject['cardDesc'] }}">
+        </div> 
+
+        <div class="row">
+          <div class="col-sm-3"></div>
+          <div></div>
+          <div class="col-sm-9"></div>
+        </div>
+        <div>
+          <div class="form-group">
+            <label for="newCardTags">Edit tags</label>
+            <input type="text" class="form-control input-lg" id="cardTags" name="cardTags" placeholder="enter tags" value="{{ cardObject['cardTags'] }}">
+          </div>
+        </div>
+
+    </div>
+    <div class="panel-footer">
+      <input type="hidden" name="behavior" value="editExistingCard">
+      <input type="hidden" name="usk" value="{{ usk }}">
+    <button type="submit" class="btn btn-lg btn-default" id="saveCard">Save Card</button>
+    </div>
+    </form>
+
+</div>
+{% endblock %}
+
+
+{% block footerScript %}
+<script>
+  $(document).ready(function(){
+
+    $('#cardTags').selectize({
+        delimiter: ',',
+        persist: false,
+        create: function(input) {
+            return {
+                value: input,
+                text: input
+            }
+        }
+    });
+
+  });
+
+</script>
+{% endblock %}

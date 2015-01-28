@@ -1,4 +1,4 @@
-serv_folder="a2"
+serv_folder="a3"
 
 lserv:
 	~/google_appengine/dev_appserver.py ~/workspace/cs496/$(serv_folder)/
