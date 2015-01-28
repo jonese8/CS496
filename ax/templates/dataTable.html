@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Data (readonly){% endblock %}
+{% block pageHeader %}Data View{% endblock %}
+
+{% block navbar %}
+<li><a href="/">Home</a></li>
+<li><a class="active" href="/view">View</a></li>
+<li><a href="/edit">Edit</a></li>
+{% endblock %}
+{% block content %}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Type</th> 
+      <th>In Base Deck</th> 
+      <th>Card</th> 
+      <th>Description</th> 
+      <th>Tags</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in readOnlyTable %}
+    {% if row['cardType'] == 'red'%}
+    <tr class="danger" id="{{ row['urlsafekey'] }}">
+    {% elif row['cardType'] == 'green' %}
+    <tr class="success" id="{{ row['urlsafekey'] }}">
+    {% else %}
+    <tr id="{{ row['urlsafekey'] }}">
+    {% endif %}
+      <td>{{ row['cardType'] }}</td>
+      <td>
+        {% if row['includedIn'] %}
+        <span class='glyphicon glyphicon-ok'></span>
+        {% endif %}
+      </td>
+      <td>{{ row['cardName'] }}</td>
+      <td>{{ row['cardDesc'] }}</td>
+      <td>
+        {% for tag in row['cardTags'] %}
+        <span class="label label-default">{{ tag }}</span>
+        {% endfor %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

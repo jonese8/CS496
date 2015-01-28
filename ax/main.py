@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for, jsonify
+from flask import Flask, request, render_template, redirect, url_for, make_response
 import urllib2
 from google.appengine.ext import ndb
 
@@ -12,6 +12,7 @@ app.config['DEBUG'] = True
 @app.route('/', methods=['GET', 'POST'])
 def basic():
   return render_template('index.html')
+  #return make_response(open('templates/rendered.html').read())
 
 @app.route('/view', methods=['GET', 'POST'])
 def displayData():
@@ -41,20 +42,11 @@ def editCard():
 def tester():
   out = ""
   if request.method == "POST":
-    if 'wordToSend' in request.form:
-      res = request.form['wordToSend']
-      return 'sending back your word \'' + res + '\''
-    else:
-      return "yep, got a post"
-      '''
+    return "yep - got the post request"
   elif request.method == "GET":
-    return "yep, got a GET"
-    '''
-  else:
-    z = dict()
-    z["input"] = "someInputs"
-    z["output"] = "someOutputs"
-    return jsonify(z)
+    return "yep - got the get request"
+
+
 
 
 @app.errorhandler(404)

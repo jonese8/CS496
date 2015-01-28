@@ -22,7 +22,18 @@ Tests...
   <button class="btn btn-primary form-control" id="sendWord">send word</button>
 </div>
 
-<script src="static/js/request_handler.js"></script>
+<script>
+  $(document).ready(function(){
+    $("#getWord").click(function(){
+      alert("here's a word");
+    });
+
+    $("#sendWord").click(function(){
+      var someWord = $("input[name=wordToSend]").val()
+      alert("you want to send '"+ someWord + "'!")
+    });
+  });
+</script>
 
 
 
