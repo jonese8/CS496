@@ -1,28 +1,89 @@
 {% extends "base.html" %}
 {% block title %}Index{% endblock %}
-{% block pageHeader %}Wordplay <small>alpha</small>{% endblock %}
+{% block pageHeader %}Wordplay <small>Game Data Admin Interface</small>{% endblock %}
 
 {% block navbar %}
-<li><a class="active" href="/">Home</a></li>
-<li><a href="/view">View</a></li>
-<li><a href="/edit">Edit</a></li>
+
 {% endblock %}
 {% block content %}
-<p class="lead">
-REST API demo
+<p>
+  <span class="lead"></span>Because the WordPlay app doesn't map very well to all of the assignment criteria, the API will function as an admin interface for interacting with the database of stored games using the 4 major HTTP verbs, 
+  <span class="lead label label-default">GET</span> , 
+  <span class="lead label label-default">POST</span> , 
+  <span class="lead label label-default">PUT</span> , and 
+  <span class="lead label label-default">DELETE</span> .
 </p>
-<p class="lead">
-Tests...
+<p>
+<span class="lead">API demo</span> (note form actions currently do not use ajax calls and thus redirect to the url specified by the form action)
 </p>
-<div class="well">
-  <button class="btn btn-primary btn-lg center-block" id="getWord">get a word</button>
-</div>
-<div class="well"> 
-  <input name="wordToSend" type="text" class="form-control input-lg">
-  <button class="btn btn-primary form-control" id="sendWord">send word</button>
-</div>
+<h3>Create a New user</h3>
+<form name='addUserForm' id='addUserForm' action="/users/" method="POST">
+  <input type="text" id="nickName" name="nickName" placeholder="Choose a username" class="form-control" required>
+  <input type="email" id="email" name="email" placeholder="Enter email address" class="form-control">
+  <button type="submit" class="btn btn-primary form-control">Create New User</button>
+</form>
+
+<h3>Create a New Game</h3>
+<form name='addGameForm' id='addGameForm' action="/games/" method="POST">
+  <select name="uid1" id="uid1" placeholder="player1" required>
+  <option value=""></option>
+  {% for user in users |sort(attribute='created_timestamp') %}
+    <option value="{{ user['key'] }}">{{ user['nickName'] }}</option>
+  {% endfor %}
+  </select>
+  <select name="uid2" id="uid2" placeholder="player2" required>
+  <option value=""></option>
+  {% for user in users |sort(attribute='created_timestamp') %}
+    <option value="{{ user['key'] }}">{{ user['nickName'] }}</option>
+  {% endfor %}
+  </select>
+  <button type="submit" class="btn btn-primary form-control">Create New Game</button>
+</form>
+<h3>Current Users</h3>
+<ul>
+{% for user in users |sort(attribute='created_timestamp') %}
+  <li><a href="/users/{{ user['key'] }}/">{{ user['nickName'] }}</a></li>
+{% endfor %}
+</ul>
+<h3>Current Games</h3>
+<ul>
+{% for game in games |sort(attribute='created_timestamp') %}
+  <li><a href="/games/{{ game['key'] }}/">{{ game['playerNames'][0] }} VS {{ game['playerNames'][1] }}</a></li>
+{% endfor %}
+</ul>
+</p>
+
+
+
 
 <script src="static/js/request_handler.js"></script>
+
+<script>
+  $(document).ready(function(){
+    $('#uid1').selectize({
+        create: true
+    });
+    $('#uid2').selectize({
+        create: true
+    });
+
+    var frm1 = $("#addUserForm");
+    frm1.submit(function(event){
+      $.ajax({
+          type: frm1.attr('method'),
+          url: frm1.attr('action'),
+          data: frm1.serialize(),
+          success: function(data) {
+            
+            alert(str(data));
+            window.location.href = "/";
+          }
+        });
+      event.preventDefault();
+    });
+
+  });
+</script>
 
 
 
