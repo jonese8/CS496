@@ -10,7 +10,7 @@ Assignment 2 [NoSQL] (https://osterbit-ndb-001.appspot.com/)
 choose a noSQL database framework and build an app that lets a user add, update, and view data
 > **Details:** uses NDB, is an Apples to Apples Deck Editor
 
-Assignment 3 [ReST API] (#)
+Assignment 3 [(sorta) REST API demo] (https://osterbit-rest-001.appspot.com/)
 ---
 build a web service that has a functional, publicly consumable API
-> **Details:** (in planning stages)
+> **Details:** very basic demo, starting point for a component of a larger app
